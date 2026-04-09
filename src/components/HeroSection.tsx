@@ -45,7 +45,7 @@ export default function HeroSection() {
               {/* Frame Foto */}
               <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-background shadow-2xl bg-muted">
                 <img
-                  src="/foto-profil.jpg" // PASTIKAN FILE INI ADA DI FOLDER PUBLIC
+                  src="/fotoawk.jpg" // PASTIKAN FILE INI ADA DI FOLDER PUBLIC
                   alt="Keenan Kaisha"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   onError={(e) => {
