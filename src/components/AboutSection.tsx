@@ -1,89 +1,107 @@
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Video, Coffee, Rocket } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
+import { ChevronLeft, ChevronRight, Calendar, MapPin, Trophy, Heart } from 'lucide-react';
 
-export default function AboutSection() {
-  const stats = [
-    { icon: Code2, value: '50+', label: 'Projects Selesai' },
-    { icon: Video, value: '100+', label: 'Video Konten' },
-    { icon: Coffee, value: '1000+', label: 'Cangkir Kopi' },
-    { icon: Rocket, value: '5+', label: 'Tahun Pengalaman' },
-  ];
+const bioSlides = [
+  {
+    year: "2010",
+    title: "Lahir di Banda Aceh",
+    description: "Lahir pada tanggal 10 Mei 2010 di kota serambi mekkah, Banda Aceh. Menjadi awal dari perjalanan hidup saya.",
+    icon: MapPin,
+    color: "from-blue-500 to-cyan-400"
+  },
+  {
+    year: "Hobi & Passon",
+    title: "Sepak Bola",
+    description: "Sangat senang menghabiskan waktu sore hari bermain bola bersama teman-teman. Bagi saya, bola bukan sekadar olahraga tapi tentang kerjasama tim.",
+    icon: Trophy,
+    color: "from-green-500 to-emerald-400"
+  },
+  {
+    year: "Sekarang",
+    title: "MAN 1 Banda Aceh",
+    description: "Saat ini menempuh pendidikan di kelas X-4. Mulai mendalami dunia teknologi dan tertarik mempelajari coding lebih dalam.",
+    icon: Calendar,
+    color: "from-orange-500 to-yellow-400"
+  },
+  {
+    year: "Masa Depan",
+    title: "Cita-cita",
+    description: "Saya bercita-cita menjadi atlit profesional yang dapat membanggakan kedua orang tua saya, daerah saya, dan negara saya.",
+    icon: Heart,
+    color: "from-purple-500 to-pink-400"
+  }
+];
+
+export default function BiographyCarousel() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <section id="about" className="py-20 md:py-32 bg-muted/30">
+    <section className="py-16 bg-transparent">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-medium mb-2 block">Tentang Saya</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Mengenal Lebih Dekat
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+        
+        <div className="relative group max-w-5xl mx-auto">
+          {/* Viewport */}
+          <div className="overflow-hidden px-4" ref={emblaRef}>
+            <div className="flex -ml-4">
+              {bioSlides.map((item, index) => (
+                <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-4">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="glass border border-white/10 p-8 rounded-[2.5rem] h-full flex flex-col items-start gap-4 hover:shadow-glow transition-all duration-300"
+                  >
+                    {/* Icon dengan Background Lingkaran Gradien */}
+                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${item.color} shadow-lg`}>
+                      <item.icon className="h-8 w-8 text-white" />
+                    </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="relative">
-              <div className="aspect-square rounded-2xl overflow-hidden glass shadow-card">
-                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <span className="text-8xl">👨‍💻</span>
+                    <div>
+                      <span className="text-primary font-bold text-sm tracking-widest uppercase">
+                        {item.year}
+                      </span>
+                      <h3 className="text-2xl font-bold mt-1 mb-3 font-display">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
                 </div>
-              </div>
-              <div className="absolute -bottom-6 -right-6 p-4 glass rounded-xl shadow-card">
-                <p className="font-display font-bold text-2xl text-gradient">5+ Tahun</p>
-                <p className="text-sm text-muted-foreground">Pengalaman</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <h3 className="font-display text-2xl md:text-3xl font-bold">
-              Passionate Developer &amp; Creator
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Saya adalah seorang Fullstack Web Developer dengan passion yang kuat dalam menciptakan 
-              solusi digital yang inovatif. Dengan pengalaman lebih dari 5 tahun, saya telah 
-              membantu berbagai klien dan perusahaan dalam mewujudkan ide-ide mereka menjadi 
-              aplikasi web yang powerful dan user-friendly.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Selain coding, saya juga aktif sebagai Content Creator, berbagi pengetahuan 
-              tentang pemrograman dan teknologi melalui berbagai platform. Saya percaya bahwa 
-              berbagi ilmu adalah cara terbaik untuk terus belajar dan berkembang.
-            </p>
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="p-4 glass rounded-xl text-center hover:shadow-card-hover transition-shadow"
-                >
-                  <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="font-display text-2xl font-bold">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
+
+          {/* Navigasi Custom */}
+          <div className="flex justify-center md:justify-between items-center mt-10 px-4">
+            <div className="flex gap-2">
+              <button
+                onClick={scrollPrev}
+                className="p-3 rounded-full glass hover:bg-primary hover:text-white transition-all border border-white/10"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="p-3 rounded-full glass hover:bg-primary hover:text-white transition-all border border-white/10"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+            
+            {/* Indikator Progres Sederhana */}
+            <div className="hidden md:block text-sm text-muted-foreground font-medium">
+              Geser untuk melihat perjalanan saya &rarr;
+            </div>
+          </div>
         </div>
       </div>
     </section>
