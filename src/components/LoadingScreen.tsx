@@ -2,8 +2,7 @@ import React from 'react';
 import { DotLottiePlayer } from '@dotlottie/react-player';
 import { motion } from 'framer-motion';
 
-// Gunakan "export default" agar bisa dipanggil tanpa kurung kurawal
-const LoadingScreen = () => {
+export default function LoadingScreen() {
   return (
     <motion.div
       initial={{ opacity: 1 }}
@@ -18,11 +17,18 @@ const LoadingScreen = () => {
           loop
         />
       </div>
-      <div className="text-center mt-4">
-        <h2 className="text-xl font-bold text-primary animate-pulse">Memuat...</h2>
-      </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="text-center mt-4"
+      >
+        <h2 className="text-xl font-display font-bold text-primary animate-pulse">
+          Memuat Portofolio...
+        </h2>
+        <p className="text-muted-foreground text-sm">Keenan Kaisha - MAN 1 Banda Aceh</p>
+      </motion.div>
     </motion.div>
   );
-};
-
-export default LoadingScreen;
+}

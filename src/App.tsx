@@ -5,14 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
-// --- PERHATIKAN BARIS INI ---
-// Jika tetap merah, ganti "./components/LoadingScreen" 
-// menjadi "@/components/LoadingScreen"
-import LoadingScreen from "./components/LoadingScreen"; 
+import LoadingScreen from "./components/LoadingScreen"; // Pastikan path benar
 
 const queryClient = new QueryClient();
 
@@ -20,9 +15,11 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Simulasi waktu loading (misal: 3 detik)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 4000);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,18 +29,17 @@ const App = () => {
         <Toaster />
         <Sonner />
         
+        {/* Animasi Transisi Keluar */}
         <AnimatePresence mode="wait">
-          {isLoading && <LoadingScreen />}
+          {isLoading && <LoadingScreen key="loader" />}
         </AnimatePresence>
 
-        {!isLoading && (
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        )}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
